@@ -1,0 +1,21 @@
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+apply plugin: 'java'
+apply plugin: 'war'
+
+version = '1.0'
+
+repositories {
+    mavenCentral()
+}
+
+
+dependencies {
+    compile project(':AUTUMN')
+    testCompile group: 'junit', name: 'junit', version: '4.11'
+}
+
+war {
+    webInf {from 'src/main/resources'}
+    webXml = new File(project(':AUTUMN').webAppDir.absolutePath,"/WEB-INF/web.xml")
+}
