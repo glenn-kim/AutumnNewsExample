@@ -1,0 +1,49 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head lang="en">
+    <meta charset="UTF-8" />
+    <title></title>
+    <style>
+        div.article{
+            border-style: solid;
+            border-width: 5px;
+            border-color: coral;
+            padding: 20px;
+            width: 400px;
+            margin: 10px;
+        }
+
+    </style>
+</head>
+<body>
+<div th:unless="${loginData}">
+    <a href="/reporter/login">login</a>
+</div>
+<div th:if="${loginData}">
+    <span th:text="${loginData}    ">aaa@aaa.aaa    </span>
+    <a href="/logout" style="margin-left: 10px">logout</a>
+    <a href="/article/post" style="margin-left: 10px"> new Article </a>
+</div>
+
+<div class = "article" th:each="article : ${articles}">
+    <b th:text = "${article.title}"> THIS IS TITLE!! </b><br /><br />
+    <span>writername : </span>
+    <span th:text = "${article.writer}">Writer. Kim.</span><br />
+    <span>create time  : </span>
+    <span th:text = "${article.create_time}">2014.1.1</span><br />
+    <span>last modified : </span>
+    <span th:text = "${article.last_modified}">2014.1.1</span><br />
+    <br />
+    <p style="width:380px" th:text = "${article.body}">this is very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very long text</p>
+    <br /><br />
+
+    <a th:href="@{'/'+${article.id}+'/comments'}" th:text="@{'read '+${article.comment_cnt}+'coments'}" href="/1/comments">read 0comments</a>
+
+</div>
+
+</body>
+
+</html>

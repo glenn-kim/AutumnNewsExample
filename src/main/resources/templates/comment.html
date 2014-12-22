@@ -1,0 +1,134 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head lang="en">
+    <meta charset="UTF-8" />
+    <title></title>
+    <style>
+        .comments{
+            width: 300px;
+            border-width: 5px;
+            border-style: dotted;
+            border-color: darkcyan;
+            padding: 20px;
+            margin: 10px;
+        }
+        .writer{
+            float: right;
+        }
+        #delcode{
+            width: 200px;
+        }
+        #name{
+            width: 200px;
+            margin-left: 30px;
+        }
+        #text{
+            width: 300px;
+        }
+
+    </style>
+
+    <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+
+</head>
+<body th:id="${aid}">
+
+<b th:text = "@{'the commments of '+${title}}">the commments of THIS IS TITLE!! </b><br /><br />
+
+
+<div class = "comments" th:each="comment : ${articles}">
+    <p th:text="${comment.text}">너무좋네요asdfasdfasdfasd fasdfasdfsadfa sdfasd fasdfsdf</p>
+    <div>
+        <span class="writer" th:text="@{'by '+${comment.writer_name}}">by CK.KIM</span>
+        <form th:id="${comment.cid}" class="delete">
+            <input type="password" class="code"/>
+            <input type="submit" value="delete"/>
+        </form>
+    </div>
+</div>
+
+
+
+<div>
+
+    <form id="post">
+        name:<input type="text" id="name"/><br />
+        password:<input type="password" id="delcode"/><br />
+        <input type="text" id="text"/>
+        <input type="submit"/>
+    </form>
+
+</div>
+
+
+<script language="javascript">
+
+    $(".delete").submit(function(e){
+        e.preventDefault();
+        var code = $(this).children(".code").val();
+        var cid = $(this).attr("id");
+        var aid = $("body").attr("id");
+        console.log(cid);
+        console.log(aid);
+        console.log(code);
+        $.ajax({
+            type: 'DELETE',
+            url: "/"+aid+"/comments/"+cid,
+            data: code+"\n",
+            success: function(){
+                location.reload(true);
+            },
+            error: function(){
+                alert("error");
+                location.reload(true);
+            }
+        })
+    });
+
+    $("#post").submit(function(e){
+        e.preventDefault();
+        var aid = $("body").attr("id");
+        var name = $("#name").val();
+        var code = $("#delcode").val();
+        var text = $("#text").val();
+        console.log(name);
+        console.log(code);
+        console.log(text);
+        $.ajax({
+            type: 'POST',
+            url: "/"+aid+"/comments/",
+            data: name+"\n"+code+"\n"+text+"\n",
+            success: function(){
+                location.reload(true);
+            },
+            error: function(){
+                alert("error");
+                location.reload(true);
+            }
+        });
+    })
+
+
+
+
+</script>
+
+</body>
+</html>
+
+
+
+<!--
+
+
+    public Column<Integer>  aid             = left.id;
+    public Column<String>   title           = left.title;
+
+    public Column<Integer>  cid             = right.cid;
+    public Column<String>   writer_name     = right.writer_name;
+    public Column<String>   text            = right.text;
+
+-->

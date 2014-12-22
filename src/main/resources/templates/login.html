@@ -1,0 +1,43 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head lang="en">
+    <meta charset="UTF-8" />
+    <title>Login</title>
+    <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+</head>
+<body>
+email and password <br />
+<form id="login">
+    <input id="email" type="email" placeholder = "email"/> <br />
+    <input id="passwd" type="password" placeholder = "password"/> <br />
+    <input type="submit" value = "login" />
+</form>
+
+<br />
+<br />
+<a href="/reporter/register">register</a>
+
+
+
+
+<script language="javascript">
+    $("#login").submit(function(e){
+        e.preventDefault();
+        $.ajax({
+            type: "POST",
+            url: "/reporter/login",
+            data: $("#email").val()+"\n"+$("#passwd").val()+"\n",
+            success: function(data){
+                window.location.replace("/");
+            },
+            error: function(){
+                alert("login failed");
+            }
+        })
+    })
+</script>
+</body>
+</html>

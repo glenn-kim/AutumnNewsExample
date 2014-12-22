@@ -1,0 +1,54 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head lang="en">
+    <meta charset="UTF-8" />
+    <title>Post Article</title>
+
+    <style>
+
+        input, textarea{
+            width: 500px;
+        }
+        textarea{
+            height: 400px;
+        }
+
+    </style>
+
+    <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+</head>
+<body>
+<form id="post">
+    <input id="title" type="text" placeholder = "title"/> <br />
+    <textarea id="text" ></textarea><br />
+    <input type="submit" value = "등록" />
+</form>
+
+
+
+
+
+<script language="javascript">
+    $("#post").submit(function(e){
+        var title = $("#title").val();
+        var text = $("#text").val();
+        var aid = $("body").attr("id");
+        e.preventDefault();
+        $.ajax({
+            type: "POST",
+            url: "/article",
+            data: title+"\n"+text+"\n",
+            success: function(data){
+                window.location.replace("/");
+            },
+            error: function(){
+                alert("post failed");
+            }
+        })
+    })
+</script>
+</body>
+</html>

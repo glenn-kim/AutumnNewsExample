@@ -15,7 +15,7 @@ dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.11'
 }
 
-war {
+war() {
     webInf {from 'src/main/resources'}
-    webXml = new File(project(':AUTUMN').webAppDir.absolutePath,"/WEB-INF/web.xml")
+    webXml = new File("AUTUMN/src/main/webapp/WEB-INF/web.xml")
 }
